@@ -1,5 +1,5 @@
 const card1 = {
-    question: 'To access an HTML element from JavaScript, you can use this method',
+    question: 'To access an HTML element from JavaScript, you can use this method:',
     ans1: 'getElementById',
     ans2: 'selectElement',
     ans3: 'getElement',
@@ -60,6 +60,9 @@ function checkanswer() {
     } else {
         question.style.color = 'red';
     }
+
+    let nextBtn = document.createElement('button');
+    card.appendChild(nextBtn);
 }
 
 ans1.addEventListener('click', function() {
