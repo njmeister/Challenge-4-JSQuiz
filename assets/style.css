@@ -1,5 +1,7 @@
 h1 {
     font-size: 50px;
+    display: inline-block;
+    margin-left: 5%;
 }
 
 h2 {
@@ -27,6 +29,20 @@ ol {
 li {
     font-size: 35px;
     line-height: 1.75;
+    padding-left: 20px;
+}
+
+li:hover {
+    position: relative;
+    background-color: blue;
+    border-radius: 50px;
+    width: 50%;
+    cursor: pointer;
+}
+
+li:active {
+    background-color: darkblue;
+    color: white;
 }
 
 header {
@@ -40,4 +56,13 @@ button {
     right: 5%;
     bottom: 10%;
     border-radius: 50px;
+    font-size: 40px;
+    font-weight: bold;
+    color: antiquewhite;
+    background-color: grey;
+}
+
+#timer {
+    float: right;
+    margin-right: 5%;
 }
