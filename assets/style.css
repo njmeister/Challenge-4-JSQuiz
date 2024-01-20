@@ -8,18 +8,23 @@ h2 {
     font-size: 40px;
 }
 
+body {
+
+}
+
 #card {
     border: 1px solid gray;
     box-shadow: 5px 5px 5px;
-    background-color: aqua;
+    background-color: white;
     width: 75%;
     left: 12.5%;
     position: absolute;
     padding-left: 50px;
     padding-top: 30px;
     padding-right: 20px;
-    margin-top: 100px;
-    height: 500px;
+    margin-top: 50px;
+    margin-bottom: 200px;
+    height: 650px;
 }
 
 ol {
@@ -36,7 +41,7 @@ li:hover {
     position: relative;
     background-color: blue;
     border-radius: 50px;
-    width: 50%;
+    /* width: 50%; */
     cursor: pointer;
 }
 
@@ -46,23 +51,34 @@ li:active {
 }
 
 header {
-    color: brown
+    /* color: brown */
 }
 
 button {
-    position: absolute;
+    position: relative;
+    display: block;
+    float: right;
     width: 200px;
     height: 75px;
-    right: 5%;
-    bottom: 10%;
     border-radius: 50px;
     font-size: 40px;
     font-weight: bold;
     color: antiquewhite;
     background-color: grey;
+    margin: 50px;
 }
 
 #timer {
+    position: relative;
     float: right;
     margin-right: 5%;
+}
+
+#fail {
+    display: flex;
+    font-size: 200px;
+    color: red;
+    justify-content: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+
 }

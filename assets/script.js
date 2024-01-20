@@ -8,10 +8,10 @@ const card1 = {
 };
 
 const card2 = {
-    question:'separates javascript statements. added at the end of each executable statement. makes it possible to write many statements on one line.',
+    question:'Separates javascript statements. Added at the end of each executable statement. makes it possible to write many statements on one line.',
     ans1: ',',
     ans2: ':',
-    ans3: ':',
+    ans3: ';',
     ans4: '/',
     correct: 3
 };
@@ -53,10 +53,10 @@ const card6= {
 };
 
 const card7= {
-    question:'What is the correct JavaScript syntax to change the content of the following HTML element? <p id="demo">This is a demonstration.</p>',
+    question:'How do you change the content of the following HTML element? <p id="demo">This is a demonstration.</p>',
     ans1: 'document.getElement("p").innerHTML = "Hello World!";',
     ans2: 'document.getElementById("demo").innerHTML = "Hello World!";',
-    ans3: 'document.getElementByName("p").innerHTML = "Hello World!";',
+    ans3: 'getElementByName("p").innerHTML = "Hello World!";',
     ans4: '#demo.HTML = "Hello World!";',
     correct: 2
 };
@@ -218,9 +218,17 @@ let cards = [card1, card2, card3, card4, card5, card6, card7, card8, card9, card
 
 const card = document.getElementById('card');
 
+let header = document.querySelector('header')
+let fail = document.createElement('p')
+
+fail.textContent = 'FAILURE';
+fail.id = 'fail';
+
+var time = 90;
+
 function timer(){
 
-  let time = 300;
+
 
     let timer = setInterval(function(){
   
@@ -234,8 +242,11 @@ function timer(){
             document.getElementById('timer').textContent=minute+':'+sec;
         }
 
-        if (time < 0) {
+        if (time <= 0) {
+            card.remove();
+            document.getElementById('timer').remove();
             clearInterval(timer);
+            header.appendChild(fail);
         }
     }, 1000);
 }
@@ -248,13 +259,13 @@ let answers = document.createElement('ol');
     let ans2 = document.createElement('li');
     let ans3 = document.createElement('li')
     let ans4 = document.createElement('li');
+let nextBtn = document.createElement('button');
+let timeSubtraction = document.createElement('p');
     
 let index = 0
 
 
 function displayCard() {
-
-
 
     question.textContent = cards[index].question;
     ans1.textContent = cards[index].ans1;
@@ -267,7 +278,6 @@ function displayCard() {
     ans4.id = 'ans4';
 
     question.style.color = 'blue'
-
 
     card.appendChild(question);
     card.appendChild(answers);
@@ -282,23 +292,40 @@ function displayCard() {
 
 function checkanswer() {
     
-    if (input === cards[0].correct) {
+    if (input === cards[index].correct) {
         question.style.color = 'green';
     } else {
         question.style.color = 'red';
+        timeSubtraction.textContent = '-10';
+
+        let timer = document.getElementById('timer');
+        timer.appendChild(timeSubtraction);
+
+        timeSubtraction.style.position = 'absolute';
+        timeSubtraction.style.top = '0px';
+        timeSubtraction.style.right = '5%';
+        timeSubtraction.style.color = 'red';
+
+        subtractTime();
+
     }
 
-    let nextBtn = document.createElement('button');
+
     card.appendChild(nextBtn);
     nextBtn.textContent = 'NEXT'
-    
+    nextBtn.style.zIndex = '5';
     nextBtn.addEventListener('click', nextCard)
 
+}
+
+function subtractTime() {
+    return time -= 10;
 }
 
 function nextCard() {
     console.log('this is working');
     index++;
+    nextBtn.remove();
     displayCard();
 }
 
