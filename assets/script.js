@@ -214,27 +214,47 @@ const card24= {
     correct: 3
 };
 
-let cards = [card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24];
+//let cards = [card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24];
+let cards = [card1, card2, card3, card4];
 
 const card = document.getElementById('card');
 
-let header = document.querySelector('header')
-let fail = document.createElement('p')
+let header = document.querySelector('header');
+let mainArea = document.querySelector('main');
+let fail = document.createElement('p');
 
 fail.textContent = 'FAILURE';
 fail.id = 'fail';
 
-var time = 90;
+let win = document.createElement('p')
+
+win.textContent = 'SUCCESS';
+win.id = 'win';
+
+let intro = document.getElementById('intro');
+let instructions = document.getElementById('instructions');
+let startBtn = document.getElementById('start');
+
+startBtn.addEventListener('click', startGame)
+
+var time = 300;
 
 function timer(){
-
-
 
     let timer = setInterval(function(){
   
         time--;
         let minute = Math.floor(time/60);
         let sec = time%60;
+        
+        if (document.getElementById('timer') == null) {
+            clearInterval(timer);
+        }
+
+        if (index === cards.length) {
+            clearInterval(timer);
+            return
+        }
 
         if (sec >= 0 && sec < 10) {
             document.getElementById('timer').textContent=minute+':0'+sec;
@@ -242,16 +262,16 @@ function timer(){
             document.getElementById('timer').textContent=minute+':'+sec;
         }
 
+
+
         if (time <= 0) {
             card.remove();
             document.getElementById('timer').remove();
             clearInterval(timer);
-            header.appendChild(fail);
+            mainArea.appendChild(fail);
         }
     }, 1000);
 }
-
-timer();
 
 let question = document.createElement('h2');
 let answers = document.createElement('ol');
@@ -261,12 +281,23 @@ let answers = document.createElement('ol');
     let ans4 = document.createElement('li');
 let nextBtn = document.createElement('button');
 let timeSubtraction = document.createElement('p');
+
     
 let index = 0
+
+function startGame() {
+    displayCard();
+    timer();
+}
+
 
 
 function displayCard() {
 
+    intro.remove();
+    instructions.remove();
+    startBtn.remove();
+    
     question.textContent = cards[index].question;
     ans1.textContent = cards[index].ans1;
     ans1.id = 'ans1';
@@ -277,7 +308,8 @@ function displayCard() {
     ans4.textContent = cards[index].ans4;
     ans4.id = 'ans4';
 
-    question.style.color = 'blue'
+    question.style.color = 'blue';
+    card.style.backgroundColor = 'white';
 
     card.appendChild(question);
     card.appendChild(answers);
@@ -293,9 +325,11 @@ function displayCard() {
 function checkanswer() {
     
     if (input === cards[index].correct) {
-        question.style.color = 'green';
+        question.style.color = 'darkgreen';
+        card.style.backgroundColor = 'lightgreen'
     } else {
-        question.style.color = 'red';
+        question.style.color = 'darkred';
+        card.style.backgroundColor = 'pink';
         timeSubtraction.textContent = '-10';
 
         let timer = document.getElementById('timer');
@@ -305,6 +339,8 @@ function checkanswer() {
         timeSubtraction.style.top = '0px';
         timeSubtraction.style.right = '5%';
         timeSubtraction.style.color = 'red';
+
+        cards.push(cards[index])
 
         subtractTime();
 
@@ -322,12 +358,100 @@ function subtractTime() {
     return time -= 10;
 }
 
+let highscore1 = localStorage.getItem('highscore1');
+let highscore2 = localStorage.getItem('highscore2');
+let highscore3 = localStorage.getItem('highscore3');
+let highscore4 = localStorage.getItem('highscore4');
+let highscore5 = localStorage.getItem('highscore5');
+
+let scoreCard = document.createElement('div');
+
+let scoreHead = document.createElement('h2');
+let scores = document.createElement('ol');
+let score1 = document.createElement('li');
+let score2 = document.createElement('li');
+let score3 = document.createElement('li')
+let score4 = document.createElement('li');
+let score5 = document.createElement('li');
+
+let yourHead = document.createElement('h2');
+let yourScore = document.createElement('p');
+
+
+
+
+function logScore() {
+
+    if (score > localStorage.getItem('highscore1')) {
+        localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('highscore4', highscore3);
+        localStorage.setItem('highscore3', highscore2);
+        localStorage.setItem('highscore2', highscore1);
+        localStorage.setItem('highscore1', score);
+    } else if (score > localStorage.getItem('highscore2')) {
+        localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('highscore4', highscore3);
+        localStorage.setItem('highscore3', highscore2);
+        localStorage.setItem('highscore2', score);
+    } else if (score > localStorage.getItem('highscore3')) {
+        localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('highscore4', highscore3);
+        localStorage.setItem('highscore3', score);
+    } else if (score > localStorage.getItem('highscore4')) {
+        localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('highscore4', score);
+    } else if (score > localStorage.getItem('highscore5')) {
+        localStorage.setItem('highscore5', score);
+    }
+
+}
+
+let score = 0;
+
 function nextCard() {
-    console.log('this is working');
     index++;
     nextBtn.remove();
+
+    if (index === cards.length) {
+        card.remove();
+        document.getElementById('timer').remove();
+        clearInterval(timer);
+        score = time;
+        logScore();
+        scorecard();
+    }
+
     displayCard();
 }
+
+function scorecard() {
+    scoreCard.style.display = 'flex';
+    scoreCard.style.justifyContent = 'space-evenly';
+
+    scoreHead.textContent = 'HIGH SCORES'
+    score1.textContent = highscore1;
+    score2.textContent = highscore2;
+    score3.textContent = highscore3;
+    score4.textContent = highscore4;
+    score5.textContent = highscore5;
+    
+    yourHead.textContent = 'YOUR SCORE';
+    yourScore.textContent = score;
+
+    mainArea.appendChild(win);
+    mainArea.appendChild(scoreCard);
+    scoreCard.appendChild(scoreHead);
+    scoreHead.appendChild(scores);
+    scores.appendChild(score1);
+    scores.appendChild(score2);
+    scores.appendChild(score3);
+    scores.appendChild(score4);
+    scores.appendChild(score5);
+
+    scoreCard.appendChild(yourHead);
+    yourHead.appendChild(yourScore);
+}
+
 
 ans1.addEventListener('click', function() {
     input = 1;
@@ -348,5 +472,3 @@ ans4.addEventListener('click', function() {
     input = 4;
     checkanswer()
 })
-
-displayCard();

@@ -8,9 +8,7 @@ h2 {
     font-size: 40px;
 }
 
-body {
 
-}
 
 #card {
     border: 1px solid gray;
@@ -51,7 +49,7 @@ li:active {
 }
 
 header {
-    /* color: brown */
+    background-color: aquamarine;
 }
 
 button {
@@ -81,4 +79,13 @@ button {
     justify-content: center;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 
+}
+
+#win {
+    display: flex;
+    font-size: 200px;
+    color: rgb(0, 255, 55);
+    justify-content: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    margin: 0px;  
 }
