@@ -272,6 +272,13 @@ function timer(){
         }
     }, 1000);
 }
+let score = 300000;
+
+function scoreTimer() {
+    let scoreTimer = setInterval(function(){
+        score--;
+    }, 1)
+}
 
 let question = document.createElement('h2');
 let answers = document.createElement('ol');
@@ -288,6 +295,7 @@ let index = 0
 function startGame() {
     displayCard();
     timer();
+    scoreTimer();
 }
 
 
@@ -364,49 +372,113 @@ let highscore3 = localStorage.getItem('highscore3');
 let highscore4 = localStorage.getItem('highscore4');
 let highscore5 = localStorage.getItem('highscore5');
 
+let initials1 = localStorage.getItem('initials1');
+let initials2 = localStorage.getItem('initials2');
+let initials3 = localStorage.getItem('initials3');
+let initials4 = localStorage.getItem('initials4');
+let initials5 = localStorage.getItem('initials5');
+
 let scoreCard = document.createElement('div');
 
 let scoreHead = document.createElement('h2');
 let scores = document.createElement('ol');
 let score1 = document.createElement('li');
 let score2 = document.createElement('li');
-let score3 = document.createElement('li')
+let score3 = document.createElement('li');
 let score4 = document.createElement('li');
 let score5 = document.createElement('li');
+
+score1.id = 'blank';
+score2.id = 'blank';
+score3.id = 'blank';
+score4.id = 'blank';
+score5.id = 'blank';
 
 let yourHead = document.createElement('h2');
 let yourScore = document.createElement('p');
 
-
-
+yourHead.id = 'scoreSection';
 
 function logScore() {
 
+    if (!highscore1) {
+        highscore1 = 0;
+    }
+
+    if (!highscore2) {
+        highscore2 = 0;
+    }
+
+    if (!highscore3) {
+        highscore3 = 0;
+    }
+
+    if (!highscore4) {
+        highscore4 = 0;
+    }
+
+    if (!highscore5) {
+        highscore5 = 0;
+    }
+
+    if (!initials1) {
+        initials1 = '';
+    }
+
+    if (!initials2) {
+        initials2 = '';
+    }
+
+    if (!initials3) {
+        initials3 = '';
+    }
+
+    if (!initials4) {
+        initials4 = '';
+    }
+
+    if (!initials5) {
+        initials5 = '';
+    }
+
     if (score > localStorage.getItem('highscore1')) {
         localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('initials5', initials4);
         localStorage.setItem('highscore4', highscore3);
+        localStorage.setItem('initials4', initials3);
         localStorage.setItem('highscore3', highscore2);
+        localStorage.setItem('initials3', initials2);
         localStorage.setItem('highscore2', highscore1);
+        localStorage.setItem('initials2', initials1);
         localStorage.setItem('highscore1', score);
+        localStorage.setItem('initials1', initInput.value);
     } else if (score > localStorage.getItem('highscore2')) {
         localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('initials5', initials4);
         localStorage.setItem('highscore4', highscore3);
+        localStorage.setItem('initials4', initials3);
         localStorage.setItem('highscore3', highscore2);
+        localStorage.setItem('initials3', initials2);
         localStorage.setItem('highscore2', score);
+        localStorage.setItem('initials2', initInput.value);
     } else if (score > localStorage.getItem('highscore3')) {
         localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('initials5', initials4);
         localStorage.setItem('highscore4', highscore3);
+        localStorage.setItem('initials4', initials3);
         localStorage.setItem('highscore3', score);
+        localStorage.setItem('initials3', initInput.value);
     } else if (score > localStorage.getItem('highscore4')) {
         localStorage.setItem('highscore5', highscore4);
+        localStorage.setItem('initials5', initials4);
         localStorage.setItem('highscore4', score);
+        localStorage.setItem('initials4', initInput.value);
     } else if (score > localStorage.getItem('highscore5')) {
         localStorage.setItem('highscore5', score);
+        localStorage.setItem('initials5', initInput.value);
     }
 
 }
-
-let score = 0;
 
 function nextCard() {
     index++;
@@ -416,24 +488,47 @@ function nextCard() {
         card.remove();
         document.getElementById('timer').remove();
         clearInterval(timer);
-        score = time;
-        logScore();
+        // score = time;
+        // logScore();
         scorecard();
+    } else {
+        displayCard();
     }
-
-    displayCard();
 }
+
+let highscoreMsg = document.createElement('p');
+highscoreMsg.id = 'highscoreMsg';
+highscoreMsg.textContent = 'NEW HIGH SCORE';
+
+let initMsg = document.createElement('p');
+initMsg.id = 'initMsg';
+initMsg.textContent = 'Input Your Initials';
+
+let initInput = document.createElement('input');
+initInput.type = 'text';
+initInput.id = 'initInput'
+
+let initSubmit = document.createElement('input');
+initSubmit.type = 'submit';
+initSubmit.id = 'initSubmit';
+
+let initials = '';
+
+//Returning NaN 
+// let scoreSave = parseInt(yourScore.textContent);
 
 function scorecard() {
     scoreCard.style.display = 'flex';
     scoreCard.style.justifyContent = 'space-evenly';
 
+    logScore();
+
     scoreHead.textContent = 'HIGH SCORES'
-    score1.textContent = highscore1;
-    score2.textContent = highscore2;
-    score3.textContent = highscore3;
-    score4.textContent = highscore4;
-    score5.textContent = highscore5;
+    score1.textContent = highscore1 + '  ' + initials1;
+    score2.textContent = highscore2 + '  ' + initials2;
+    score3.textContent = highscore3 + '  ' + initials3;
+    score4.textContent = highscore4 + '  ' + initials4;
+    score5.textContent = highscore5 + '  ' + initials5;
     
     yourHead.textContent = 'YOUR SCORE';
     yourScore.textContent = score;
@@ -450,8 +545,87 @@ function scorecard() {
 
     scoreCard.appendChild(yourHead);
     yourHead.appendChild(yourScore);
+
+    if (score > highscore5) {
+        yourHead.appendChild(highscoreMsg);
+        highscoreMsg.appendChild(initMsg);
+        highscoreMsg.appendChild(initInput);
+        highscoreMsg.appendChild(initSubmit);
+    }
+
+    console.log(typeof yourScore)
+    
+    let scoreSave = parseInt(yourScore.textContent);
+    
+    console.log(scoreSave);
+
+    console.log(parseInt(yourScore.textContent));
+
+
+
+ 
+
+    initSubmit.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        console.log(score);
+
+        //parse integer
+
+        if(scoreSave > parseInt(highscore1)) {
+            localStorage.setItem('initials1', initInput.value);
+        } else if (scoreSave > parseInt(highscore2)) {
+            localStorage.setItem('initials2', initInput.value);
+        } else if (scoreSave > parseInt(highscore3)) {
+            localStorage.setItem('initials3', initInput.value);
+        } else if (scoreSave > parseInt(highscore4)) {
+            localStorage.setItem('initials4', initInput.value);
+        } else {
+            localStorage.setItem('initials5', initInput.value);
+        }
+        
+        console.log(scoreSave);
+        console.log(highscore1);
+        console.log(highscore2);
+        console.log(highscore3);
+        console.log(highscore4);
+        console.log(highscore5);
+
+        console.log(parseInt(highscore1));
+        console.log(parseInt(highscore2));
+        console.log(parseInt(highscore3));
+        console.log(parseInt(highscore4));
+        console.log(parseInt(highscore5));
+    })
 }
 
+// initSubmit.addEventListener('click', function(event) {
+//     event.preventDefault();
+
+//     console.log(score);
+//     console.log(scoreSave);
+
+//     if(scoreSave == parseInt(highscore1)) {
+//         localStorage.setItem('initials1', initInput.value);
+//     } else if (scoreSave == parseInt(highscore2)) {
+//         localStorage.setItem('initials2', initInput.value);
+//     } else if (scoreSave == parseInt(highscore3)) {
+//         localStorage.setItem('initials3', initInput.value);
+//     } else if (scoreSave == parseInt(highscore4)) {
+//         localStorage.setItem('initials4', initInput.value);
+//     } else if (scoreSave == parseInt(highscore5)) {
+//         localStorage.setItem('initials5', initInput.value);
+//     } else {
+//         alert('this isnt working');
+//     }
+    
+//     console.log(scoreSave);
+//     console.log(highscore1);
+//     console.log(highscore2);
+//     console.log(highscore3);
+//     console.log(highscore4);
+//     console.log(highscore5);
+// })
 
 ans1.addEventListener('click', function() {
     input = 1;

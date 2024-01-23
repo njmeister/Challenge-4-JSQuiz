@@ -1,3 +1,7 @@
+body {
+    margin: 0px;
+}
+
 h1 {
     font-size: 50px;
     display: inline-block;
@@ -39,13 +43,22 @@ li:hover {
     position: relative;
     background-color: blue;
     border-radius: 50px;
-    /* width: 50%; */
     cursor: pointer;
+}
+
+#blank:hover {
+    background-color: white;
+    cursor: auto;
 }
 
 li:active {
     background-color: darkblue;
     color: white;
+}
+
+#blank:active {
+    background-color: white;
+    color: black;
 }
 
 header {
@@ -62,7 +75,7 @@ button {
     font-size: 40px;
     font-weight: bold;
     color: antiquewhite;
-    background-color: grey;
+    background-color: teal;
     margin: 50px;
 }
 
@@ -88,4 +101,52 @@ button {
     justify-content: center;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     margin: 0px;  
+}
+
+#scoreSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    & p {
+        margin: 10px;
+    }
+}
+
+#highscoreMsg {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 50px!important;
+    color: rgb(0, 255, 55);
+    background-color: darkblue;
+    padding: 25px;
+    border-radius: 20px;
+}
+
+#initMsg {
+    justify-content: center;
+    color: white;
+}
+
+#initInput {
+    display: block;
+    margin-top: 15px;
+    font-size: 30px;
+    text-align: center;
+    font-family: reset;
+    font-weight: bold;
+}
+
+#initSubmit {
+    display: block;
+    background-color: aquamarine;
+    justify-self: center;
+    margin-top: 15px;
+    font-size: 25px;
+    font-family: reset;
+    font-weight: bold;
+    border-radius: 7px;
 }
