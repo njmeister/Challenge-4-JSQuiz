@@ -5,9 +5,12 @@
 This is my submission for the fourth challenge in the UTA/EdX Coding Bootcamp. The goal of this challenge was to create an interactive quiz with JavaScript.
 The website presents you with a series of questions related to JavaScript. Once you have correctly answered them all, you are given a score based on your time.
 
-<img src="./assets/images/"/>
+<img src="./assets/images/Screenshot-home.png"/>
+<img src="./assets/images/Screenshot-question.png"/>
+<img src="./assets/images/Screenshot-scores.png"/>
 
-<a href="https://njmeister.github.io/UTA-bootcamp-challenge-3/">Link</a>
+
+<a href="https://njmeister.github.io/Challenge-4-JSQuiz/">Link</a>
 
 
 
