@@ -12,6 +12,10 @@ h2 {
     font-size: 40px;
 }
 
+h3 {
+    font-size: 30px;
+}
+
 
 
 #card {
@@ -62,7 +66,8 @@ li:active {
 }
 
 header {
-    background-color: aquamarine;
+    background-color: darkblue;
+    color: aquamarine;
 }
 
 button {
@@ -74,8 +79,8 @@ button {
     border-radius: 50px;
     font-size: 40px;
     font-weight: bold;
-    color: antiquewhite;
-    background-color: teal;
+    color: aquamarine;
+    background-color: darkblue;
     margin: 50px;
 }
 

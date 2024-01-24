@@ -1,3 +1,5 @@
+//Defining the questions with multiple choice answers and the correct answer as objects
+
 const card1 = {
     question: 'To access an HTML element from JavaScript, you can use this method:',
     ans1: 'getElementById',
@@ -205,18 +207,10 @@ const card23= {
     correct: 3
 };
 
-const card24= {
-    question:'What will the following code return: Boolean(10 > 9)',
-    ans1: 'false',
-    ans2: 'NaN',
-    ans3: 'true',
-    ans4: 'error',
-    correct: 3
-};
+//puts all the questions into an array
+let cards = [card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23];
 
-//let cards = [card1, card2, card3, card4, card5, card6, card7, card8, card9, card10, card11, card12, card13, card14, card15, card16, card17, card18, card19, card20, card21, card22, card23, card24];
-let cards = [card1, card2, card3, card4];
-
+//identifying the html elements that need to be changed by javascript
 const card = document.getElementById('card');
 
 let header = document.querySelector('header');
@@ -237,6 +231,8 @@ let startBtn = document.getElementById('start');
 
 startBtn.addEventListener('click', startGame)
 
+//creates a countdown timer for the quiz
+
 var time = 300;
 
 function timer(){
@@ -244,18 +240,21 @@ function timer(){
     let timer = setInterval(function(){
   
         time--;
+        //turns the time into minutes and seconds format
         let minute = Math.floor(time/60);
         let sec = time%60;
         
+        //keeps the timer from being displayed immediately
         if (document.getElementById('timer') == null) {
             clearInterval(timer);
         }
-
+        // clears the timer when the quiz is done
         if (index === cards.length) {
             clearInterval(timer);
             return
         }
 
+        //fixes the display so the timer displays a 0 before single digit seconds
         if (sec >= 0 && sec < 10) {
             document.getElementById('timer').textContent=minute+':0'+sec;
         } else {
@@ -263,7 +262,7 @@ function timer(){
         }
 
 
-
+        //clears the timer and display the failure message if the timer runs out
         if (time <= 0) {
             card.remove();
             document.getElementById('timer').remove();
@@ -272,6 +271,8 @@ function timer(){
         }
     }, 1000);
 }
+
+//defines a second timer that tracks in milliseconds to allow for a more detailed final score
 let score = 300000;
 
 function scoreTimer() {
@@ -280,6 +281,7 @@ function scoreTimer() {
     }, 1)
 }
 
+//creates the elements to display the questions
 let question = document.createElement('h2');
 let answers = document.createElement('ol');
     let ans1 = document.createElement('li');
@@ -289,9 +291,10 @@ let answers = document.createElement('ol');
 let nextBtn = document.createElement('button');
 let timeSubtraction = document.createElement('p');
 
-    
+//sets an index to display the different questions    
 let index = 0
 
+//a function to start the card display and two timers at the same time
 function startGame() {
     displayCard();
     timer();
@@ -299,7 +302,7 @@ function startGame() {
 }
 
 
-
+//removes the initial HTML elements from the page and replaces them with a multiple choice question
 function displayCard() {
 
     intro.remove();
@@ -330,14 +333,18 @@ function displayCard() {
 
 }
 
+//checks the answer and indicates if it's correct or not
 function checkanswer() {
     
+    //displays green if the correct answer is entered
     if (input === cards[index].correct) {
         question.style.color = 'darkgreen';
         card.style.backgroundColor = 'lightgreen'
     } else {
+        //displays red if incorrect answer is selected
         question.style.color = 'darkred';
         card.style.backgroundColor = 'pink';
+        //indicates that time has been cut off for mistake
         timeSubtraction.textContent = '-10';
 
         let timer = document.getElementById('timer');
@@ -348,13 +355,15 @@ function checkanswer() {
         timeSubtraction.style.right = '5%';
         timeSubtraction.style.color = 'red';
 
+        //puts incorrect answers back at the end of the quiz so that every question must be answered correctly to win
         cards.push(cards[index])
 
+        //subtracts time from the timer
         subtractTime();
 
     }
 
-
+    //creates a button to move on to the next question
     card.appendChild(nextBtn);
     nextBtn.textContent = 'NEXT'
     nextBtn.style.zIndex = '5';
@@ -362,10 +371,12 @@ function checkanswer() {
 
 }
 
+//subtracts 10 seconds from the timer
 function subtractTime() {
     return time -= 10;
 }
 
+//defines highscore and initials variables as local storage items
 let highscore1 = localStorage.getItem('highscore1');
 let highscore2 = localStorage.getItem('highscore2');
 let highscore3 = localStorage.getItem('highscore3');
@@ -378,6 +389,7 @@ let initials3 = localStorage.getItem('initials3');
 let initials4 = localStorage.getItem('initials4');
 let initials5 = localStorage.getItem('initials5');
 
+//creates the elements to display the highscores
 let scoreCard = document.createElement('div');
 
 let scoreHead = document.createElement('h2');
@@ -388,19 +400,23 @@ let score3 = document.createElement('li');
 let score4 = document.createElement('li');
 let score5 = document.createElement('li');
 
+//changes the CSS of the score displays to make them visually distinct from other elements
 score1.id = 'blank';
 score2.id = 'blank';
 score3.id = 'blank';
 score4.id = 'blank';
 score5.id = 'blank';
 
+//creates the elements to display the score from this attempt
 let yourHead = document.createElement('h2');
 let yourScore = document.createElement('p');
 
 yourHead.id = 'scoreSection';
 
+//identifies the saved highscores and reorganizes them to include the new highscore
 function logScore() {
 
+    //displays 0 instead of null if there is no saved highscore
     if (!highscore1) {
         highscore1 = 0;
     }
@@ -441,6 +457,7 @@ function logScore() {
         initials5 = '';
     }
 
+    //reorders the highscores to include the new one and still be in descending order
     if (score > localStorage.getItem('highscore1')) {
         localStorage.setItem('highscore5', highscore4);
         localStorage.setItem('initials5', initials4);
@@ -480,22 +497,23 @@ function logScore() {
 
 }
 
+//instructs to display next question on button press
 function nextCard() {
     index++;
     nextBtn.remove();
 
+    //ends the quiz if all questions have been correctly answered
     if (index === cards.length) {
         card.remove();
         document.getElementById('timer').remove();
         clearInterval(timer);
-        // score = time;
-        // logScore();
         scorecard();
     } else {
         displayCard();
     }
 }
 
+//creates the elements needed to enter your initials if you get a new highscore
 let highscoreMsg = document.createElement('p');
 highscoreMsg.id = 'highscoreMsg';
 highscoreMsg.textContent = 'NEW HIGH SCORE';
@@ -514,9 +532,7 @@ initSubmit.id = 'initSubmit';
 
 let initials = '';
 
-//Returning NaN 
-// let scoreSave = parseInt(yourScore.textContent);
-
+//displays the scores
 function scorecard() {
     scoreCard.style.display = 'flex';
     scoreCard.style.justifyContent = 'space-evenly';
@@ -546,31 +562,20 @@ function scorecard() {
     scoreCard.appendChild(yourHead);
     yourHead.appendChild(yourScore);
 
+    //displays the option to enter your initials if you get a highscore
     if (score > highscore5) {
         yourHead.appendChild(highscoreMsg);
         highscoreMsg.appendChild(initMsg);
         highscoreMsg.appendChild(initInput);
         highscoreMsg.appendChild(initSubmit);
     }
-
-    console.log(typeof yourScore)
     
+    //matches the input of initials with the appropriate highscore
     let scoreSave = parseInt(yourScore.textContent);
     
-    console.log(scoreSave);
-
-    console.log(parseInt(yourScore.textContent));
-
-
-
- 
-
-    initSubmit.addEventListener('click', function(event) {
-        event.preventDefault();
+    initSubmit.addEventListener('click', function() {
 
         console.log(score);
-
-        //parse integer
 
         if(scoreSave > parseInt(highscore1)) {
             localStorage.setItem('initials1', initInput.value);
@@ -583,50 +588,13 @@ function scorecard() {
         } else {
             localStorage.setItem('initials5', initInput.value);
         }
-        
-        console.log(scoreSave);
-        console.log(highscore1);
-        console.log(highscore2);
-        console.log(highscore3);
-        console.log(highscore4);
-        console.log(highscore5);
 
-        console.log(parseInt(highscore1));
-        console.log(parseInt(highscore2));
-        console.log(parseInt(highscore3));
-        console.log(parseInt(highscore4));
-        console.log(parseInt(highscore5));
+        //reloads the page after entering your initials
+        window.location.reload();
     })
 }
 
-// initSubmit.addEventListener('click', function(event) {
-//     event.preventDefault();
-
-//     console.log(score);
-//     console.log(scoreSave);
-
-//     if(scoreSave == parseInt(highscore1)) {
-//         localStorage.setItem('initials1', initInput.value);
-//     } else if (scoreSave == parseInt(highscore2)) {
-//         localStorage.setItem('initials2', initInput.value);
-//     } else if (scoreSave == parseInt(highscore3)) {
-//         localStorage.setItem('initials3', initInput.value);
-//     } else if (scoreSave == parseInt(highscore4)) {
-//         localStorage.setItem('initials4', initInput.value);
-//     } else if (scoreSave == parseInt(highscore5)) {
-//         localStorage.setItem('initials5', initInput.value);
-//     } else {
-//         alert('this isnt working');
-//     }
-    
-//     console.log(scoreSave);
-//     console.log(highscore1);
-//     console.log(highscore2);
-//     console.log(highscore3);
-//     console.log(highscore4);
-//     console.log(highscore5);
-// })
-
+//records the answer the user selected and checks if it's correct
 ans1.addEventListener('click', function() {
     input = 1;
     checkanswer()
